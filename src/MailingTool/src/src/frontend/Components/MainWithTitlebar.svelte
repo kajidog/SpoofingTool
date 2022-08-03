@@ -1,5 +1,4 @@
 <script lang="ts">
-  import { TitleBar } from "@el3um4s/svelte-titlebar";
   export let title: string = "Title";
 
   let outerW = globalThis.outerWidth - 8;
@@ -26,14 +25,6 @@
 <svelte:window bind:outerWidth={outerW} />
 
 <main>
-  <TitleBar
-    {title}
-    {isMaximized}
-    on:clickMinimize={minimize}
-    on:clickUnmaximize={unmaximize}
-    on:clickMaximize={maximize}
-    on:clickClose={close}
-  />
   <div class="page">
     <slot />
   </div>
