@@ -1,25 +1,6 @@
 <script lang="ts">
-  export let title: string = "Title";
 
   let outerW = globalThis.outerWidth - 8;
-  let isMaximized = outerW >= globalThis.screen.availWidth;
-
-  $: {
-    isMaximized = outerW >= globalThis.screen.availWidth;
-  }
-
-  function minimize() {
-    globalThis.api.windowControls.send("minimize", null);
-  }
-  function maximize() {
-    globalThis.api.windowControls.send("maximize", null);
-  }
-  function close() {
-    globalThis.api.windowControls.send("close", null);
-  }
-  function unmaximize() {
-    globalThis.api.windowControls.send("unmaximize", null);
-  }
 </script>
 
 <svelte:window bind:outerWidth={outerW} />
@@ -37,8 +18,7 @@
     --text-color: theme("colors.red.900");
   }
   .page {
-    @apply p-5 overflow-y-auto w-full border border-red-900;
-    height: calc(100% - theme("spacing.8"));
+    height: 100%;
   }
 
   .page::-webkit-scrollbar {
