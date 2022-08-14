@@ -7,6 +7,9 @@ import CustomWindow from "./customWindow";
 import systemInfo from './IPC/systemInfo';
 import updaterInfo from './IPC/updaterInfo';
 import windowControls from './IPC/windowControls';
+import fileControl from './IPC/fileControl';
+import storeInfo from './IPC/storeInfo';
+import mailControls from './IPC/mailControls';
 
 require('electron-reload')(__dirname);
 
@@ -33,7 +36,7 @@ async function createMainWindow() {
     const urlPage = path.join(__dirname, 'www', 'index.html');
     mainWindow.createWindow(urlPage);
 
-    await mainWindow.setIpcMain([systemInfo, updaterInfo, windowControls]);
+    await mainWindow.setIpcMain([systemInfo, storeInfo, updaterInfo, fileControl, windowControls, mailControls]);
 
     updaterInfo.initAutoUpdater(autoUpdater, mainWindow.window);
 }

@@ -1,10 +1,10 @@
 <script lang="ts">
   import "./css/tailwind.pcss";
   import MainWithTitlebar from "./Components/MainWithTitlebar.svelte";
+  import DataPreview from "./Components/DataPreview.svelte";
   let electron = "-";
   globalThis.api.systemInfo.send("requestSystemInfo", null);
   globalThis.api.systemInfo.receive("getSystemInfo", (data) => {
-
     electron = data.electron;
   });
 </script>
@@ -15,11 +15,6 @@
 
 <MainWithTitlebar>
   <section class="text-center space-y-6">
-    <div><span>送信元</span> kajidog@icraft.jp</div>
-    <div><span>送信先</span>kajiwara.k@icraft.jp</div>
-    <div><span>プレビュー</span></div>
-    Electron
-  <span class="version" data-testid="version-number-electron">{electron}</span>.
+    <DataPreview />
   </section>
 </MainWithTitlebar>
-
