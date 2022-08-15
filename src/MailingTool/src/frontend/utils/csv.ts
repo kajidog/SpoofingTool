@@ -10,7 +10,7 @@ export function readFileAsText(file: Blob): Promise<string> {
 
 // 文字を２次元配列に変換
 export function mapCSVToArray(csv: string): string[][] {
-    return csv.split('\n').map((row) => row.replace("\r6", "").split(','));
+    return csv.split('\n').map((row) => row.replace("\r", "").split(','));
 }
 
 
