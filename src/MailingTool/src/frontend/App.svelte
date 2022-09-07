@@ -10,7 +10,7 @@
 </script>
 
 <svelte:head>
-  <title>MEMENTO - Svelte, TailwindCSS, Electron and TypeScript</title>
+  <title>SpoofingTool - MailingTool</title>
 </svelte:head>
 
 <MainWithTitlebar>
