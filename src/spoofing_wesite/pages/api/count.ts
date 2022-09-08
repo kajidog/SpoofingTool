@@ -16,6 +16,7 @@ export default function handler(
 
     return
   }
-  writeFile("count_log/" + event_name + "/" + id + ".txt", ts + " " + id + "\n", () => { })
+  writeFile("log/" + event_name + "/" + id + ".txt", ts + " " + id + "\n", () => { })
+  writeFile("log/" + event_name + "/" + "index.txt", ts + " " + id + "\n", () => { })
   res.status(200).json({ name: 'save' })
 }

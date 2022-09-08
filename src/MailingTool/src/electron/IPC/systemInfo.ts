@@ -30,7 +30,7 @@ function requestSystemInfo(mainWindow: BrowserWindow, event: Electron.IpcMainEve
     const result = {
         chrome: versionChrome,
         node: versionNode,
-        electron: os.hostname()
+        hostname: os.hostname()
     }
     mainWindow.webContents.send("getSystemInfo", result);
 }

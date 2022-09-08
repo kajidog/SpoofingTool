@@ -1,7 +1,6 @@
 <script lang="ts">
-  import "./css/tailwind.pcss";
   import MainWithTitlebar from "./Components/MainWithTitlebar.svelte";
-  import DataPreview from "./Components/DataPreview.svelte";
+  import DataPreview from "./Components/Main.svelte";
   let electron = "-";
   globalThis.api.systemInfo.send("requestSystemInfo", null);
   globalThis.api.systemInfo.receive("getSystemInfo", (data) => {

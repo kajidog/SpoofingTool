@@ -7,8 +7,8 @@ const appName = "SpoofingTool - MailingTool";
 
 const defaultSettings = {
   title: "SpoofingTool - MailingTool",
-  width: 854,
-  height: 480,
+  width: 1000,
+  height: 750,
   titleBarStyle: 'hiddenInset',
   autoHideMenuBar: true,
   backgroundColor: '#FFF'

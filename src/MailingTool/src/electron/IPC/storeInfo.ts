@@ -16,6 +16,7 @@ const CONFIG_SUBJECT_KEY = "subject_config";
 
 const nameAPI = "storeInfo";
 
+// 設定読み込み
 const requestConfig: SendChannel<undefined> = async (mainWindow) => {
     const to = getStore<string>(CONFIG_TO_KEY);
     const server = getStore<string>(CONFIG_SERVER_KEY);
@@ -29,37 +30,41 @@ const requestConfig: SendChannel<undefined> = async (mainWindow) => {
         server: server,
         csv: text,
         bodyText: bodyText,
-        subject
+        subject,
+        filepath: path,
     });
 }
 
+// ファイル選択
 const selectConfig: SendChannel<undefined> = async (mainWindow) => {
-    const path = getStore<string>(CONFIG_KEY);
-    const paths = dialog.showOpenDialogSync(mainWindow, {
-        buttonLabel: '開く',
-        defaultPath: path,
-        filters: [
-            { name: 'Csv', extensions: ['csv'] },
-        ],
-        properties: [
-            'openFile',         // ファイルの選択を許可
-            'createDirectory',  // ディレクトリの作成を許可 (macOS)
-        ]
-    });
-
-    // キャンセルで閉じた場合
-    if (paths === undefined) {
-        return;
-    }
-
-    // ファイルの内容を返却
     try {
-        const path = paths[0];
-        const buff = await readFile(path);
-        setStore(CONFIG_KEY, path); // 取得したパスを保存
+        const path = getStore<string>(CONFIG_KEY);
+        const paths = dialog.showOpenDialogSync(mainWindow, {
+            buttonLabel: '開く',
+            defaultPath: path,
+            filters: [
+                { name: 'CSV', extensions: ['csv'] },
+            ],
+            properties: [
+                'openFile',         // ファイルの選択を許可
+                'createDirectory',  // ディレクトリの作成を許可 (macOS)
+            ]
+        });
+
+        // キャンセル
+        if (paths === undefined) {
+            return;
+        }
+
+        // ファイルの内容を返却
+        const _path = paths[0];
+        const buff = await readFile(_path);
+        setStore(CONFIG_KEY, _path); // 取得したパスを保存
+
+        // 取得したことをレンダラーに通信
         mainWindow.webContents.send("getConfig", {
             csv: toUTF8(buff)
-        }); // 取得したことをレンダラーに通信
+        });
     }
     catch (error) {
         return;

@@ -1,10 +1,7 @@
 import { SendChannel, SendChannels } from "./General/channelsInterface";
-import { getStore, setStore } from "./General/store";
 import IPC from "./General/IPC";
-import { dialog } from "electron";
-import { readFile } from "../utils/fs";
-import { toUTF8 } from "../utils/encode";
 import { SendMail as SendMailUtil } from "../utils/sendMail";
+import { sleep } from "../utils";
 
 
 // __________________________________________________
@@ -17,11 +14,23 @@ type SendMailProps = {
     from: string;
     text: string;
     subject: string;
+    index: string | number;
 }
 const sendMail: SendChannel<SendMailProps> = async (mainWindow, _, messages) => {
-    console.log(messages);
-    SendMailUtil({
+    // 1秒遅らせてメール送信
+    sleep(1)(SendMailUtil, {
         ...messages
+    }).then(() => {
+        mainWindow.webContents.send("progress", {
+            state: 2,
+            index: messages.index
+        });
+    }).catch(() => {
+        mainWindow.webContents.send("progress", {
+            state: 3,
+            index: messages.index
+        });
+
     })
 
 }
@@ -39,6 +48,7 @@ const validSendChannel: SendChannels = {
 // from Main
 const validReceiveChannel: string[] = [
     "doneMail",
+    "progress"
 ];
 
 export const mailControls = new IPC({
