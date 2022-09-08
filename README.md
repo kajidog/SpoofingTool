@@ -22,19 +22,19 @@ svelte 3.49.0
     cd MailingTool
  ```
 
-#### インストール
+#### 1.2.1 インストール
 
  ```bash
     npm i
  ```
 
-#### dev server 起動
+#### 1.2.2 dev server 起動
 
  ```bash
     npm run dev
  ```
 
-#### ビルド
+#### 1.2.3 ビルド
 
  *out* にインストーラーが生成されます。  
 
