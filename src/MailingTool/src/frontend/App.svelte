@@ -1,11 +1,6 @@
 <script lang="ts">
   import MainWithTitlebar from "./Components/MainWithTitlebar.svelte";
   import DataPreview from "./Components/Main.svelte";
-  let electron = "-";
-  globalThis.api.systemInfo.send("requestSystemInfo", null);
-  globalThis.api.systemInfo.receive("getSystemInfo", (data) => {
-    electron = data.electron;
-  });
 </script>
 
 <svelte:head>

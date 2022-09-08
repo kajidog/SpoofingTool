@@ -1,4 +1,6 @@
 <script lang="ts">
+  // メール本文のプレビュー
+
   import { replaceCSV_Text } from "../utils/text";
 
   export let config: any;
@@ -23,10 +25,10 @@
 
 <div class="preview">
   <span
-    >PV<br /><button on:click={rowIndexDown}>前</button><button
-      on:click={rowIndexUp}>次</button
-    ></span
-  >
+    >PV<br />
+    <button on:click={rowIndexDown}>前</button>
+    <button on:click={rowIndexUp}>次</button>
+  </span>
   <div>
     {preview}
   </div>
@@ -45,9 +47,10 @@
     word-wrap: break-word;
     white-space: pre-line;
     max-width: 1000px;
-    width: 90%;
+    width: 85%;
     padding: 0.5rem;
     border-radius: 0.35rem;
+    background-color: #fff;
   }
   span {
     padding: 0.5rem;

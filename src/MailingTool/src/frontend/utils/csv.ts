@@ -13,7 +13,6 @@ export function mapCSVToArray(csv: string): string[][] {
     return csv.split('\n').map((row) => row.replace("\r", "").split(','));
 }
 
-
 // ２次元配列のCSVデータをTableデータに変更する
 export function createTableData(csvData: string[][]) {
     const columns = csvData.shift().map((raw) => {

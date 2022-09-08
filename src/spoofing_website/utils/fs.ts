@@ -28,10 +28,7 @@ export async function writeFile(path: string, contents: string, callback: fs.NoP
 export async function readFile(path: string) {
     return new Promise<Buffer>((resolve, reject) => {
         fs.readFile(path, (err, data) => {
-            if (err) {
-                reject(err)
-            }
-            resolve(data)
+            err ? reject(err) : resolve(data)
         })
     })
 }

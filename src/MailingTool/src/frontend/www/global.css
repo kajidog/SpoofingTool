@@ -1,9 +1,7 @@
-/* html,
+ html,
 body {
-  position: relative;
-  width: 100%;
-  height: 100%;
-} */
+  background: #072a42;
+} 
 
 /* body {
   color: #333;
@@ -16,6 +14,8 @@ body {
 td, th{
   border: 1px solid #ddd;
   padding: .5rem;
+  background: #fff ;
+
 }
 table{
    border-collapse: collapse;

@@ -1,9 +1,10 @@
 <script lang="ts">
+  // マウント時にメール送信して、結果が確認できるコンポーネント
+
   import { onMount } from "svelte";
   import { replaceCSV_Text } from "../utils/text";
   import Square from "./Square.svelte";
 
-  const MAIL_ADDRESS_COL = "メールアドレス";
   export let table: any;
   export let mailTo: any;
   export let bodyText: any;
@@ -12,13 +13,16 @@
   let finFlg = false;
   let cancelFlg = false;
   let states = [];
-  let codes = {
+  const MAIL_ADDRESS_COL = "メールアドレス";
+  const codes = {
     "-1": "不明",
     0: "waiting",
     1: "sending...",
     2: "Success!",
     3: "Failed",
   };
+
+  // マウント時
   onMount(async () => {
     initState();
     sendMail(0);
@@ -32,7 +36,7 @@
       state: data.state || -1,
     };
 
-    // 終了判定
+    // 終了判定　最後のメールだった場合
     if (data.index >= table.rows.length - 1) {
       finFlg = true;
       return;
@@ -42,7 +46,7 @@
     !cancelFlg && sendMail(data.index + 1);
   });
 
-  // 初期化
+  // states初期化
   function initState() {
     table.rows.forEach((mailAddress) => {
       states = [
@@ -57,10 +61,13 @@
 
   // メール送信
   function sendMail(index) {
+    // 通信開始に
     states[index] = {
       ...states[index],
       state: 1,
     };
+
+    // 指定回のメールを送信する
     const row = table.rows[index];
     globalThis.api.mailControls.send("sendMail", {
       to: row[MAIL_ADDRESS_COL],
@@ -71,6 +78,7 @@
     });
   }
 
+  // 処理中断
   function cancel() {
     finFlg = true;
     cancelFlg = true;
@@ -80,14 +88,17 @@
 <div class="wrap_progress">
   <div class="progress">
     <p>実行結果</p>
+
     <div>
       {#each states as row}
         <div><Square state={row.state} /> {row.label} : {codes[row.state]}</div>
       {/each}
     </div>
+
     {#if finFlg}
       <button on:click={close}>close</button>
     {/if}
+
     {#if !finFlg}
       <button on:click={cancel}>cancel</button>
     {/if}

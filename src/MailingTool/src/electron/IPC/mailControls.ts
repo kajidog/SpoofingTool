@@ -35,10 +35,8 @@ const sendMail: SendChannel<SendMailProps> = async (mainWindow, _, messages) => 
 
 }
 
-
 // ________________________________________________-
 //
-
 
 // to Main
 const validSendChannel: SendChannels = {

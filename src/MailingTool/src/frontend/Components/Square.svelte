@@ -1,4 +1,6 @@
 <script lang="ts">
+  // state によって色が変わる四角形のコンポーネント
+
   export let state: number;
 </script>
 

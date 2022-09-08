@@ -1,5 +1,5 @@
 <script lang="ts">
-
+  // レイアウト
   let outerW = globalThis.outerWidth - 8;
 </script>
 
