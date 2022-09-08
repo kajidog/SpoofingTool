@@ -9,7 +9,5 @@ export const toUTF8 = (buff: Buffer) => {
 }
 
 export const checkEncode = (buff: Buffer) => {
-    console.log(Encoding.detect(buff));
-
     return Encoding.detect(buff) as Encoding.Encoding;
 }

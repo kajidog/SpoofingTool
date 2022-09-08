@@ -4,6 +4,7 @@ import IPC from "./General/IPC";
 import { dialog } from "electron";
 import { readFile } from "../utils/fs";
 import { toUTF8 } from "../utils/encode";
+import axios from "axios";
 
 
 // __________________________________________________
@@ -13,6 +14,8 @@ const CONFIG_TO_KEY = "to_config";
 const CONFIG_SERVER_KEY = "server_config";
 const CONFIG_BODY_TEXT_KEY = "body_text_config";
 const CONFIG_SUBJECT_KEY = "subject_config";
+const CONFIG_URL_KEY = "url_config";
+const CONFIG_EVENTNAME_KEY = "eventname_config";
 
 const nameAPI = "storeInfo";
 
@@ -24,6 +27,22 @@ const requestConfig: SendChannel<undefined> = async (mainWindow) => {
     const subject = getStore<string>(CONFIG_SUBJECT_KEY);
     const path = getStore<string>(CONFIG_KEY);
     const text = await readFile(path).then(toUTF8).catch(() => "");
+    const eventname = getStore<string>(CONFIG_EVENTNAME_KEY);
+    const url = getStore<string>(CONFIG_URL_KEY);
+    const log = await axios(url + "/api/event/" + eventname, {
+        method: "GET",
+        headers: {
+            accept: "application/json",
+        },
+    })
+        .then((res) => {
+            return res.data
+        })
+        .catch((err) => {
+            return {
+                txt: ""
+            }
+        });
 
     mainWindow.webContents.send("getConfig", {
         mailTo: to,
@@ -32,6 +51,9 @@ const requestConfig: SendChannel<undefined> = async (mainWindow) => {
         bodyText: bodyText,
         subject,
         filepath: path,
+        log: log.txt,
+        url,
+        eventname
     });
 }
 
@@ -76,13 +98,17 @@ type saveConfigProps = {
     mailTo?: string;
     serverURL?: string;
     bodyText?: string;
-    subject?: string
+    subject?: string;
+    url?: string;
+    eventname?: string
 }
 const saveConfig: SendChannel<saveConfigProps> = async (__, _, messages) => {
     messages.mailTo && setStore(CONFIG_TO_KEY, messages.mailTo);
     messages.serverURL && setStore(CONFIG_SERVER_KEY, messages.serverURL);
     messages.bodyText && setStore(CONFIG_BODY_TEXT_KEY, messages.bodyText);
     messages.subject && setStore(CONFIG_SUBJECT_KEY, messages.subject);
+    messages.url && setStore(CONFIG_URL_KEY, messages.url);
+    messages.eventname && setStore(CONFIG_EVENTNAME_KEY, messages.eventname);
 }
 
 

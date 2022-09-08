@@ -1,7 +1,6 @@
 <script lang="ts">
   import SvelteTable from "svelte-table";
   import { createTableData, mapCSVToArray } from "../utils/csv";
-  import { replaceCSV_Text } from "../utils/text";
   import MailBodyPreview from "./MailBodyPreview.svelte";
   import Progress from "./Progress.svelte";
   let table = {
@@ -13,9 +12,10 @@
   let bodyText = undefined;
   let subject = undefined;
   let filepath = undefined;
+  let url = undefined;
+  let eventname = undefined;
   let progressFlg = false;
-
-  const MAIL_ADDRESS_COL = "メールアドレス";
+  let log = "";
 
   // 設定再読み込み
   async function ReloadData() {
@@ -34,6 +34,8 @@
       serverURL,
       bodyText,
       subject,
+      url,
+      eventname,
     });
   }
 
@@ -61,6 +63,9 @@
     bodyText = data.bodyText || bodyText || "";
     subject = data.subject || subject || "";
     filepath = data.filepath || filepath || "";
+    url = data.url || url || "";
+    eventname = data.eventname || eventname || "";
+    log = data.log || log || "";
   });
 
   async function sendMail() {
@@ -100,6 +105,25 @@
   {#if progressFlg}
     <Progress {table} {mailTo} {subject} {bodyText} {close} />
   {/if}
+  <div class="mail-block ">
+    <h2>spoofing_website</h2>
+    <div>
+      <span>URL</span>
+      <input type="text" bind:value={url} placeholder="http://localhost:3000" />
+    </div>
+    <div>
+      <span>イベント名</span> <input type="text" bind:value={eventname} />
+    </div>
+    <div class="preview">
+      <span>アクセスログ</span>
+      <div>
+        {log}
+      </div>
+    </div>
+    <button on:click={SaveData}>設定保存</button>
+    <button on:click={ReloadData}>リロード</button>
+  </div>
+
   <button on:click={sendMail}>メール送信</button>
 </div>
 
@@ -136,5 +160,19 @@
     padding: 0.5rem;
     flex-basis: 5rem;
     text-align: center;
+  }
+
+  .preview > div {
+    display: flex;
+    flex-direction: column;
+  }
+  .preview > div {
+    border: 1px solid #ddd;
+    word-wrap: break-word;
+    white-space: pre-line;
+    max-width: 1000px;
+    width: 90%;
+    padding: 0.5rem;
+    border-radius: 0.35rem;
   }
 </style>

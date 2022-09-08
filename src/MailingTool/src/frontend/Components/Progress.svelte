@@ -100,8 +100,6 @@
     font-weight: bold;
   }
 
-  button {
-  }
   .wrap_progress {
     background-color: rgba(68, 68, 68, 0.205);
     position: fixed;
