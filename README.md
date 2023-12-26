@@ -108,14 +108,10 @@ Next.js 12.2.5
 
 #### 2.3.1 リンク
 
-<img src="URL.png" width="90%" style="border:1px solid #aaa" />  
-
 https://web.kajidog.com/update20220819_v3/efewweeddd/BM6cnkCPsgQy779vhDXhm-x/GCR2LB4CH/  
 上記リンクを踏んだ場合、*update20220819_v3* というフォルダの中の *efewweeddd.txt* にアクセスした時間が記録されます。
 
 #### 2.3.2 訓練用ページ
-
-<img src="サイト.png" width="90%" />  
 
 **spoofing_website/pages/[name]/[id]/\[\[...other]]/index.tsx**  
 上記のファイルがなりすまし訓練用のページになります。  
