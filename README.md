@@ -67,8 +67,6 @@ csvの形式は ***sample.csv*** を参考にしてください。(メールア�
 
 本文の中に <#列名> でメールごとに違う内容にすることができます。  
 例）  
-<img src="画面1.png" width="90%" />  
-<img src="画面2.png" width="90%" />  
 
 ## 2. spoofing_website
 
